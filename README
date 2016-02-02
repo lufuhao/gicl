@@ -1,0 +1,23 @@
+First ans important, just to clarify, I am not the author of this program. 
+
+Background:
+	GICL/TICL is such a good program to cluster, overlap and extend large set of ESTs. It seems this program is no longer well-maintained, And it's said difficult to setup. And some recent versions of PERL report error. 
+	SO, so, so I decided to rewrite the main program to make it run perfectly.
+	I believe that would benefit many people, who were or are struggling with EST overlapping problems
+	Just to be sure, I did not rewrite those core-algorithm-related executables. So, 
+		
+Description:
+	Here is an new repository for GICL, I rewrite some of the perl code to make this program to run with recent perl versions
+
+To do list:
+	Later I will write a detailed protocol to show "HOW-TO setup this program".
+		How to compile from source
+		How to setup step by step
+
+
+Maintainer:
+	Fu-Hao Lu
+	Post-Doctoral Scientist in Micheal Bevan laboratory
+	Cell and Developmental Department, John Innes Centre
+	Norwich NR4 7UH, United Kingdom
+	E-mail: Fu-Hao.Lu\@jic.ac.uk
