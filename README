@@ -1,23 +1,97 @@
-First ans important, just to clarify, I am not the author of this program. 
+First and important, just to clarify, I am not the author of this program. 
+
+
 
 Background:
-
 	GICL/TICL is such a good program to cluster, overlap and extend large set of ESTs. It seems this program is no longer well-maintained, And it's said difficult to setup. And some recent versions of PERL report error. 
 	SO, so, so I decided to rewrite the main program to make it run perfectly.
 	I believe that would benefit many people, who were or are struggling with EST overlapping problems
 	Just to be sure, I did not rewrite those core-algorithm-related executables. So, take it easy to use
-		
-Description:
 
+
+	
+Description:
 	Here is an new repository for GICL, I rewrite some of the perl code to make this program to run with recent perl versions
 	GICL is a better and more adjustable program than TGICL. It can be used to cluster, overlap and extend large set of ESTs with or without full-length cDNAs.	
 
-To do list:
-	Later I will write a detailed protocol to show "HOW-TO setup this program".
-		Upload all main programs, perl modules, gclibs
-		How to compile from source
-		How to setup step by step
-		How to run with or without full-length cDNAs
+
+
+Requirements:
+	Linux: csh xorg openbox libxmu-dev libmotif libxp-dev PVM zlib make gcc tar ???
+	
+	Perl: Getopt::Std; Getopt::Long; Cwd; FindBin; File::Basename; POSIX; Fcntl;
+
+
+
+Install:
+	
+1. First install some requirements
+	### But some Linux programs or libraries are needed, like: csh, X11, xmu, motif, Xp
+	### Do not install libmotif-dev
+	### psx need PVM
+	### On my Ubuntu 14.04 x86_64, I installed these by:
+	$ sudo apt-get install csh xorg openbox libxmu-dev libmotif libxp-dev zlib1g-dev pvm pvm-dev
+	
+2. install Perl libs
+	
+
+3.	First, comiple NCBI C toolkit v20060507, which is need for the mgblast program. This version of package is included in program subforder.
+	$ cd /yourpath/gicl/programs
+	$ tar xvf ncbi_toolkit.20060507.tar.gz
+
+	### Your will see a ncbi folder, and have a look at the ncbi/README or ncbi/make/readme.* files to understand how to compile
+	
+
+	###then you need to try 3 times to compile this NCBItoolkit, dur to it's almost 10 years old. You probably get some warnings when compiling
+	$ ./ncbi/make/makedis.csh 2>&1 | tee out.makedis.txt
+	### Remember try 3 times uuntil you see this message
+			......
+			Put the date stamp to the file ../VERSION
+			*********************************************************
+			*The new binaries are located in ./ncbi/build/ directory*
+			*********************************************************
+			
+	### If you tried 3 times but still got some error, you'd better to check what's wrong based on the error message. GOOGLE it.
+	### The files needed should be in /yourpath/gicl/programs/ncbi/include and /yourpath/gicl/programs/ncbi/lib
+	
+4. Run install.sh to automatically set up all the program
+	$ ./install.sh -i
+	
+	### OR UNINSTALL all the programs
+	
+	$ ./install.sh -u
+
+	## IF one of the program failed, the installation will stop. Then you need to go gicl/programs/ folder to check what's wrong based on the make.log and make.err fles
+	
+5. IF all the programs are successfully compiled, you will see a message to remind you to add /your_full_path/gicl/bin to your PATH, so system knows where to find these executables.
+
+	###try 
+	$ /yourpath/gicl/programs/bin/gicl 
+	
+	### to see if you can see the help message
+
+	That's all, GOOD LUCK.
+
+
+
+Usage: 
+	$ gicl --query my.fasta -minov 50 --pid 95 --maxovh 40 -mk
+	ace2fasta.pl -o contigs.fa *.ace
+	cat contigs.fa *.singletons > final.fasta
+	
+	OR if you have some full length cDNA sequences as references
+	
+	### Add unique sequence ID prefix to easily filter out these sequences below
+	sed 's/^>/>et|/' your.fulllength.cDNA.fa > your.db_et.fa
+	cat my.fa your.db_et.fa > xxx.fa
+	gicl --query xxx.fa -minov 50 --pid 95 --maxovh 40 -mk -n 2000 -d your.db_et.fa -R et
+	### Then filter out those full length sequences
+	grep -v '^et|' *.singletons | cdbyank path/to/*.cidx > singletons.fa
+    gicl singletons.fa -l 50 -p 95 -v 40 -mk -n 2000
+    cat *.ace > zzz.ace
+    ace2fasta.pl -o contigs.fa zzz.ace
+    cat contigs.fa *.singletons > final.fasta
+    
 
 
 Maintainer:
