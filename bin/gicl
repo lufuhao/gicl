@@ -99,6 +99,7 @@ Examples
 
      gicl xxx.fa -l 50 -p 95 -v 40 -mk -n 2000
      ace2fasta.pl -o contigs.fa *.ace
+	 cat contigs.fa *.singletons > final.fasta
      
      sed 's/^>/>et|/' < your.db.fa > your.db_et.fa
      cat my.fa your.db_et.fa > xxx.fa
@@ -106,7 +107,8 @@ Examples
      grep -v '^et|' *.singletons | cdbyank path/to/*.cidx > singletons.fa
      gicl singletons.fa -l 50 -p 95 -v 40 -mk -n 2000
      cat *.ace > zzz.ace
-     ace2fasta.pl -o zzz.fa zzz.ace
+     ace2fasta.pl -o contigs.fa zzz.ace
+     cat contigs.fa *.singletons > final.fasta
 
 Authors:
      Fu-Hao Lu
