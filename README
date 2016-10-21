@@ -55,7 +55,9 @@ Install:
 	### If you tried 3 times but still got some error, you'd better to check what's wrong based on the error message. GOOGLE it.
 	### The files needed should be in /yourpath/gicl/programs/ncbi/include and /yourpath/gicl/programs/ncbi/lib
 	
-4. Run install.sh to automatically set up all the program
+4. Go back to gicl root path which you can find 'install.sh'. Run install.sh to automatically set up all the program
+
+	$ cd /yourpath/gicl/
 	$ ./install.sh -i
 	
 	### OR UNINSTALL all the programs
