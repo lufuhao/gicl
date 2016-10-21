@@ -43,9 +43,9 @@ Install:
 	### Your will see a ncbi folder, and have a look at the ncbi/README or ncbi/make/readme.* files to understand how to compile
 	
 
-	###then you need to try 3 times to compile this NCBItoolkit, dur to it's almost 10 years old. You probably get some warnings when compiling
+	###then you need to try 3 times to compile this NCBItoolkit, as it's almost 10 years old. You probably get some warnings when compiling
 	$ ./ncbi/make/makedis.csh 2>&1 | tee out.makedis.txt
-	### Remember try 3 times uuntil you see this message
+	### Remember try 3 times until you see this message
 			......
 			Put the date stamp to the file ../VERSION
 			*********************************************************
