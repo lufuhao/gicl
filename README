@@ -35,7 +35,8 @@ Install:
 2. install Perl libs
 	
 
-3.	First, comiple NCBI C toolkit v20060507, which is need for the mgblast program. This version of package is included in program subforder.
+3.	First, comiple NCBI C toolkit v20060507, which is need for the mgblast program. This version of package is included in program subforder, or download it by yourself from NCBI FTP site (ftp://ftp.ncbi.nih.gov/toolbox/ncbi_tools/old/).
+
 	$ cd /yourpath/gicl/programs
 	$ tar xvf ncbi_toolkit.20060507.tar.gz
 
