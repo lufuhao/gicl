@@ -15,7 +15,7 @@ gicl -in query.fa [-d <refDb>] [-g condor|sge|smp] [-c {<num_CPUs>]
      [-p <pid>] [-n slicesize] [-mk] [-L <local_wrk_dir>] [-S] [-K] [-X] 
      [-I] [-W <pairwise_script.psx>] [-D] [-J] [-a] [--help||-h]
 
-Version 20160216 by Fu-Hao Lu;
+Version 20171115 by Fu-Hao Lu;
 
 Requirements:
 	NCBI BLAST: formatdb
@@ -96,14 +96,14 @@ Options:
      -a=1,2,3,4,5,6
      
 Examples
-
-     gicl xxx.fa -l 50 -p 95 -v 40 -mk -n 2000
+  No reference:
+     gicl -in xxx.fa -l 50 -p 95 -v 40 -mk -n 2000
      ace2fasta.pl -o contigs.fa *.ace
-	 cat contigs.fa *.singletons > final.fasta
-     
+     cat contigs.fa *.singletons > final.fasta
+  With reference:
      sed 's/^>/>et|/' < your.db.fa > your.db_et.fa
      cat my.fa your.db_et.fa > xxx.fa
-     gicl xxx.fa -l 50 -p 95 -v 40 -mk -n 2000 -d your.db_et.fa -R et
+     gicl -in xxx.fa -l 50 -p 95 -v 40 -mk -n 2000 -d your.db_et.fa -R et
      grep -v '^et|' *.singletons | cdbyank path/to/*.cidx > singletons.fa
      gicl singletons.fa -l 50 -p 95 -v 40 -mk -n 2000
      cat *.ace > zzz.ace
@@ -125,7 +125,7 @@ EOM
 ###Getoptions################################################
 my ($help, $debug, $query, $skippairewise, $nodbmasking, $nomasking, $nodbindices, $nosort, $nopairwaisezmerge, $no_zmerge, $onlysearch, $psx_clust, $refprefix, $localdirbase, $useDb, $useDbname, $cpus, $mailuser, $numseqs, $pid, $minovl, $maxovh, $gridx, $asm_paramfile, $singleton_list);
 GetOptions(
-	"query|in=s" => \$query,
+	"query|in:s" => \$query,
 	"debug|D!" => \$debug,
 	"help|h!" => \$help,
 	"skippairewise|J!" => \$skippairewise,
@@ -386,12 +386,8 @@ END { #to be executed on exit
 		$step_log =~ s/\s+$//;
 		$exit_msg.="\nThis is the content of the error log file (ended at $cur_step):\n$step_log" if ($step_log);
 		my $host=$ENV{'HOST'} || $ENV{'HOSTNAME'};
-		my $msg = $no_error ? qq/$FindBin::Script ($query) finished on machine $host
-                 in $wrkdir, without a detectable error.
-                 / :
-                 qq/$FindBin::Script ($query) encountered an error at step $cur_step
-                 Working directory was $wrkdir.                 
-                 /;
+		my $msg = $no_error ? qq/$FindBin::Script ($query) finished on machine $host\n    --- in $wrkdir, without a detectable error.\n/:
+                 qq/$FindBin::Script ($query) encountered an error at step $cur_step\n    --- Working directory was $wrkdir.\n/;
 		unless ($no_error) { #an abnormal termination
 			&flog("\nProcess terminated with an error, at step '$cur_step'!");
 			&send_mail({to=>$mailuser, subj=>"$FindBin::Script ($query) error at $cur_step!",
